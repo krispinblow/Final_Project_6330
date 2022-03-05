@@ -1,7 +1,7 @@
 
 
 OPTIONS1 = ['during class time', 'before/after school or during non-instructional time']
-OPTIONS2 = ['Elementary', 'Secondary']
+#OPTIONS2 = ['Elementary', 'Secondary']
 
 class TeacherchoiceSimulation:
     def __init__(self):

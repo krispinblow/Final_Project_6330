@@ -8,4 +8,6 @@ Assignment 6
     Step 1: the domain model
     Step 2: the repository pattern
     Step 3: the service layer
-    
+
+
+I have a working domain model. Though I only added one question at this time. 
