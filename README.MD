@@ -10,4 +10,4 @@ Assignment 6
     Step 3: the service layer
 
 
-I have a working domain model. Though I only added one question at this time. 
+I have reworked my domain model. It is a decision tree. 

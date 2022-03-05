@@ -1,6 +1,6 @@
 
 
-OPTIONS1 = ['during class time', 'before/after school or during non-instructional time']
+"""OPTIONS1 = ['during class time', 'before/after school or during non-instructional time']
 #OPTIONS2 = ['Elementary', 'Secondary']
 
 class TeacherchoiceSimulation:
@@ -41,3 +41,28 @@ class TeacherchoiceSimulation:
 
 TCS = TeacherchoiceSimulation()
 TCS.simulate()
+ """
+#from tabulate import tabulate
+ 
+class Decision:
+   
+    decision1 = "This is a campus activty fund."
+    decision2 = "This is a student activity fund."
+    decision3 = "This is not activity funds."
+    decision4 = "This is a student led group."
+    '''decisions = [[1,"CA","This is a campus activity fund"],
+            [2, "SA", "This is a student activity fund"],
+            [3, "Not AF", "This is not an actifity fund"],
+            [4, "Student Led", "This is a student led group"]]
+    
+    col_names = ["decisionID", "decisionName", "dOutput"] 
+ 
+    print(tabulate(decisions, headers=col_names, tablefmt="grid", showindex="no"))'''
+    
+#OPTIONS1 = ['during class time', 'before/after school or during non-instructional time'] 
+ 
+class Questions:
+    def __init__(self):
+        self.teacher_choice = None
+    
+    
