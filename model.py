@@ -24,20 +24,20 @@ class TeacherchoiceSimulation:
         elif self.teacher_choice == 'before/after school or during non-instructional time':
             print(f'This may be a student activity. Please continue...')
     
-    def get_teacher_choice_2(self):
+    '''def get_teacher_choice_2(self):
         choice_number = int(input('Elementary or Secondary Level?\nEnter the number of your choice: '))
-        self.teacher_choice = OPTIONS2[choice_number - 1]
+        self.teacher_choice_2 = OPTIONS2[choice_number]
     
     def print_options_2(self):
-        print('\n'.join(f'({i}) {option.title()}' for i, option in enumerate(OPTIONS2)))
+        print('\n'.join(f'({i}) {option.title()}' for i, option in enumerate(OPTIONS2)))'''
     
     def simulate(self):
         self.print_options()
         self.get_teacher_choice_1()
         self.print_choices()
         self.print_result()
-        self.get_teacher_choice_2()
-        self.print_options_2()
+        #self.get_teacher_choice_2()
+        #self.print_options_2()
 
 TCS = TeacherchoiceSimulation()
 TCS.simulate()
