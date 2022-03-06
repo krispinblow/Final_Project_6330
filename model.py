@@ -59,8 +59,8 @@ class Decision:
  
     print(tabulate(decisions, headers=col_names, tablefmt="grid", showindex="no"))'''
     
-OPTIONS1 = ['during class time', 'before/after school or during non-instructional time'] 
-OPTIONS2 = ['Elementary', 'Secondary']
+#OPTIONS1 = ['during class time', 'before/after school or during non-instructional time'] 
+#OPTIONS2 = ['Elementary', 'Secondary']
  
 class Questions:
     while True:
