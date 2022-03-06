@@ -11,3 +11,5 @@ Assignment 6
 
 
 I have reworked my domain model. It is a decision tree. 
+
+I have a question class that has a predetermined set of questions and answers. The answer chosen will be evaluated. The evaluation can be directed to ask another question or give a decision. There is a decision class with four outcomes.
