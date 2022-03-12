@@ -45,12 +45,13 @@ TCS.simulate()
 #from tabulate import tabulate
  
 class Decision:
+   decision: str
    
-    decision1 = "This is a campus activty fund."
+ '''decision1 = "This is a campus activty fund."
     decision2 = "This is a student activity fund."
     decision3 = "This is not activity funds."
     decision4 = "This is a student led group."
-    '''decisions = [[1,"CA","This is a campus activity fund"],
+    decisions = [[1,"CA","This is a campus activity fund"],
             [2, "SA", "This is a student activity fund"],
             [3, "Not AF", "This is not an actifity fund"],
             [4, "Student Led", "This is a student led group"]]
@@ -62,7 +63,7 @@ class Decision:
 #OPTIONS1 = ['during class time', 'before/after school or during non-instructional time'] 
 #OPTIONS2 = ['Elementary', 'Secondary']
  
-class Questions:
+"""class Questions:
     while True:
         qid1 = input("When will the meetings be held? \n 1) during class time \n 2) before/after school or non-instructional time \n: ")
         if qid1 == "1":
@@ -118,4 +119,28 @@ class Questions:
         elif qid5 == "2":
             print(Decision.decision1)
             break
-           
+"""
+class Questions:
+    def __init__(self, qid: str):
+        self.qid = qid
+        self._evaluate = Decision()
+        
+        """self.qid1 = input("When will the meetings be held? \n 1) during class time \n 2) before/after school or non-instructional time \n: ")
+    qid2 = input("Elementary or Secondary Level? \n 1) Elementary \n 2) Secondary \n: ")
+    qid3 = "STUCO? \n 1) Yes \n 2) No \n:"
+    qid4 = "Who runs the meetings/makes decisions? \n 1) Sponsor/Teacher \n 2) Students/Members \n: "
+    qid5 = "Documented minutes of each meeting? \n 1) Yes \n 2) No \n: "
+    qid6 = "Vote for Officers? \n 1) Yes \n 2) No \n: "
+    qid7 = "Monetary transactions? \n 1) Yes \n 2) No \n: "
+    qid8 = "Open to the student body? \n 1) Yes \n 2) No \n: "
+    qid9 = "Curriculum based? \n 1) Yes \n 2) No \n: "
+        """
+    
+
+    def evaluate(self, line: qid):
+        if qid1 == "1":
+        print(Decision.decision1)
+
+      
+                  
+            
