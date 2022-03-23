@@ -23,9 +23,10 @@ class Decision:
 class Questions:
     def __init__(self, qID1:str, qID2:str, answer1:str, answer2: str):
         self.qID1 = qID1
-        self.qID2 = qID2
+        self.qID2 = qID2       
         self.answer1 = answer1
         self.answer2 = answer2
+        
         
         
     def evaluation(self):
@@ -39,6 +40,7 @@ class Questions:
                 print("Continue to question 3")
             elif self.qID2 == self.answer2:
                 print("Continue to question 4")
+                break
         
     
 # def evaluate_questions():
