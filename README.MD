@@ -17,3 +17,7 @@ I have a question class that has a predetermined set of questions and answers. T
 I worked to get the model.py working. There are nested functions that I will extract. Next is the database. I will be using Sqlite.
 
 I scrapped my orginal model.py and reworked it. I don't need to code the details only define each class and their functions. I test the functions/methods. I have a class for Decisions and Questions. The questions will be evaluated based on the respective answer.
+
+I am modeling a decision tree. There are decisions that are determined by the answers to specific questions. I will code in some information to test.
+
+Eureeka!! My test passed!!!!!!!!!!
