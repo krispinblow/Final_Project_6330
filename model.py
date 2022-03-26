@@ -23,9 +23,9 @@ class AnswerLine:
         pass"""
     
 class Question:
-    def __init__(self, qid:str, questions:str, aid:str):
+    def __init__(self, qid:str, ques:str, aid:str):
         self.qid = qid
-        self.questions = questions
+        self.ques = ques
         self.aid = aid
         #self.d_id = d_id
         self._evaluate = set() # type Set[DecisionLine]
