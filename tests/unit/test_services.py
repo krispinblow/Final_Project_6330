@@ -12,6 +12,7 @@ class FakeRepository(repository.AbstractRepository):
 
     def get(self, qid):
         return next(b for b in self._questions if b.qid == qid)
+
     def list(self):
         return list(self._questions)
 
@@ -35,7 +36,7 @@ def test_add_question():
     assert uow.committed
 
 
-'''def test_allocate_returns_allocation():
+"""def test_allocate_returns_allocation():
     uow = FakeUnitOfWork()
     services.add_batch("batch1", "COMPLICATED-LAMP", 100, None, uow)
     result = services.allocate("o1", "COMPLICATED-LAMP", 10, uow)
@@ -54,4 +55,4 @@ def test_allocate_commits():
     uow = FakeUnitOfWork()
     services.add_batch("b1", "OMINOUS-MIRROR", 100, None, uow)
     services.allocate("o1", "OMINOUS-MIRROR", 10, uow)
-    assert uow.committed'''
+    assert uow.committed"""

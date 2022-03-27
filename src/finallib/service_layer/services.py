@@ -2,9 +2,9 @@ from __future__ import annotations
 from typing import Optional
 from datetime import date
 
-from finallib.domain import model
-from finallib.domain.model import OrderLine
-from finallib.service_layer import unit_of_work
+from src.finallib.domain import model
+from src.finallib.domain.model import DecisionLine
+from src.finallib.service_layer import unit_of_work
 from src.finallib.domain.model import DecisionLine
 
 
@@ -17,7 +17,9 @@ def is_valid_ques(ques, questions):
 
 
 def add_question(
-    qid: str, ques: str, aid: str,
+    qid: str,
+    ques: str,
+    aid: str,
     uow: unit_of_work.AbstractUnitOfWork,
 ):
     with uow:
@@ -26,7 +28,9 @@ def add_question(
 
 
 def evaluate(
-    d_id: str, ques: str, aid: str,
+    d_id: str,
+    ques: str,
+    aid: str,
     uow: unit_of_work.AbstractUnitOfWork,
 ) -> str:
     line = DecisionLine(d_id, ques, aid)

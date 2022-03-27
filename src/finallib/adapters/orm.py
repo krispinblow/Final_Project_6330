@@ -1,7 +1,7 @@
 from sqlalchemy import Table, MetaData, Column, Integer, String, Date, ForeignKey
 from sqlalchemy.orm import mapper, relationship
 
-from finallib.domain import model
+from src.finallib.domain import model
 
 
 metadata = MetaData()
@@ -47,7 +47,9 @@ def start_mappers():
         questions,
         properties={
             "_evaluate": relationship(
-                lines_mapper, secondary=evaluate, collection_class=set,
+                lines_mapper,
+                secondary=evaluate,
+                collection_class=set,
             )
         },
     )

@@ -6,7 +6,7 @@ def get_sqlite_memory_uri():
 
 
 def get_sqlite_file_url():
-    return f"sqlite:///bookmarks.db"
+    return f"sqlite:///questions.db"
 
 
 def get_postgres_uri():

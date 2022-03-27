@@ -24,11 +24,10 @@ def test_decisionline_mapper_can_save_lines(session):
     rows = list(session.execute('SELECT d_id, dname FROM "decision_lines"'))
     assert rows == [("decision1", "Campus-Activity")]
 
+
 def test_saving_questions(session):
     question = model.Question("1", "When will meetings be held", "1")
     session.add(question)
     session.commit()
-    rows = session.execute(
-        'SELECT qid, ques, aid FROM "questions"'
-    )
+    rows = session.execute('SELECT qid, ques, aid FROM "questions"')
     assert list(rows) == [("1", "When will meetings be held", "1")]

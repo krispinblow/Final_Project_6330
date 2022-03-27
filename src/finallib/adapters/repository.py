@@ -1,5 +1,5 @@
 import abc
-from finallib.domain import model
+from src.finallib.domain import model
 
 
 class AbstractRepository(abc.ABC):

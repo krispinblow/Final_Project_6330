@@ -1,4 +1,4 @@
-import pytest
+"""import pytest
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, clear_mappers
 
@@ -16,4 +16,4 @@ def in_memory_db():
 def session(in_memory_db):
     start_mappers()
     yield sessionmaker(bind=in_memory_db)()
-    clear_mappers()
+    clear_mappers()"""

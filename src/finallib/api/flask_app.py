@@ -13,14 +13,14 @@ orm.start_mappers()
 
 @app.route("/add_question", methods=["POST"])
 def add_question():
-    '''eta = request.json["eta"]
+    """eta = request.json["eta"]
     if eta is not None:
-        eta = datetime.fromisoformat(eta).date()'''
+        eta = datetime.fromisoformat(eta).date()"""
     services.add_question(
         request.json["qid"],
         request.json["ques"],
         request.json["aid"],
-        #eta,
+        # eta,
         unit_of_work.SqlAlchemyUnitOfWork(),
     )
     return "OK", 201

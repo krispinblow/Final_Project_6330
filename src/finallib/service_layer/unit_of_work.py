@@ -4,8 +4,8 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.session import Session
 
-from finallib import config
-from finallib.adapters import repository
+from src.finallib import config
+from src.finallib.adapters import repository
 
 
 class AbstractUnitOfWork(abc.ABC):
