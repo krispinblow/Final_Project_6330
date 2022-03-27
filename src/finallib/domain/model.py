@@ -1,4 +1,3 @@
-
 from dataclasses import dataclass
 from typing import List, Set 
 import string
@@ -36,29 +35,3 @@ class Question:
     
     '''def can_evaluate(self, line: DecisionLine) -> bool:
         return self.qid == line.qid and self.aid == line.aid'''
-           
-    
-
-    
-        
-       
-   
-        
-        
-
-
-        
-    
-
-
-
-
-
-
-
-
-
-
-
-
-      
