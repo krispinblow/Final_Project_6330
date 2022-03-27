@@ -1,5 +1,5 @@
 # pylint: disable=protected-access
-import model
+from src.finallib.domain import model
 import src.finallib.adapters.repository as repository
 
 

@@ -1,4 +1,4 @@
-import model
+from src.finallib.domain import model
 
 
 def test_decisionline_mapper_can_load_lines(session):
