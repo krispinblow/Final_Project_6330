@@ -31,7 +31,7 @@ class FakeUnitOfWork(unit_of_work.AbstractUnitOfWork):
 
 def test_add_question():
     uow = FakeUnitOfWork()
-    services.add_question("2", "Elementary or secondary level?", "2", uow)
+    services.add_question("1", "Elementary or secondary level?", "1", uow)
     assert uow.questions.get("1") is not None
     assert uow.committed
 
