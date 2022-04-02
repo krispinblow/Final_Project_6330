@@ -8,3 +8,4 @@ def test_evaluate_decisions():
     question.evaluate(line)
 
     # assert Question.aid == "1"
+

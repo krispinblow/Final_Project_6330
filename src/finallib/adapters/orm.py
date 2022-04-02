@@ -1,4 +1,4 @@
-from sqlalchemy import Table, MetaData, Column, Integer, String, Date, ForeignKey
+from sqlalchemy import Table, MetaData, Column, Integer, String, Date, ForeignKey, events
 from sqlalchemy.orm import mapper, relationship
 
 from src.finallib.domain import model
@@ -42,7 +42,7 @@ evaluate = Table(
 
 def start_mappers():
     lines_mapper = mapper(model.DecisionLine, decision_lines)
-    mapper(
+    questions_mapper = mapper(
         model.Question,
         questions,
         properties={
@@ -53,3 +53,12 @@ def start_mappers():
             )
         },
     )
+    mapper(
+        model.Answer,
+        answer_lines,
+        properties={"questions": relationship(questions_mapper)},    
+    )
+
+@events.listens_for(model.Answer, "load")
+def receive_load(answer, _):
+    answer.events =  []

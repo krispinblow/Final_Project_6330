@@ -1,7 +1,27 @@
+from __future__ import annotations
 from dataclasses import dataclass
-from typing import List, Set
+from typing import Optional, List, Set
 import string
+from . import events
 
+class Answer:
+    def __init__(self, ques: str, questions: List[Question], version_number: int = 0):
+        self.ques = ques
+        self.questions = questions
+        self.version_number = version_number
+        self.events = []  # type: List[events.Event]
+
+    def evaluate(self, line: DecisionLine) -> str:
+        try:
+            question = next(b for b in sorted(self.questions) if b.can_evaluate(line))
+            question.evaluate(line)
+            self.version_number += 1
+            return question.reference
+        except StopIteration:
+            #self.events.append(events.OutOfStock(line.sku))
+            return None
+
+    
 
 @dataclass
 class DecisionLine:
