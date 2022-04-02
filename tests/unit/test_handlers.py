@@ -8,26 +8,26 @@ from src.finallib.service_layer import handlers, messagebus, unit_of_work
 
 
 class FakeRepository(repository.AbstractRepository):
-    def __init__(self, products):
+    def __init__(self, answers):
         super().__init__()
-        self._products = set(products)
+        self._answers = set(answers)
 
-    def _add(self, product):
-        self._products.add(product)
+    def _add(self, answer):
+        self._answers.add(answer)
 
     def _get(self, ques):
-        return next((p for p in self._products if p.ques == ques), None)
+        return next((p for p in self._answers if p.ques == ques), None)
 
     def _get_by_questionqid(self, questionqid):
         return next(
-            (p for p in self._products for b in p.questions if b.reference == questionqid),
+            (p for p in self._answers for b in p.questions if b.reference == questionqid),
             None,
         )
 
 
 class FakeUnitOfWork(unit_of_work.AbstractUnitOfWork):
     def __init__(self):
-        self.products = FakeRepository([])
+        self.answers = FakeRepository([])
         self.committed = False
 
     def _commit(self):
@@ -38,19 +38,19 @@ class FakeUnitOfWork(unit_of_work.AbstractUnitOfWork):
 
 
 class TestAddBatch:
-    def test_for_new_product(self):
+    def test_for_new_answer(self):
         uow = FakeUnitOfWork()
         messagebus.handle(
             events.QuestionCreated("1", "When are meetings held?",), uow
         )
-        assert uow.products.get("1") is not None
+        assert uow.answers.get("3") is not None
         assert uow.committed
 
-    '''def test_for_existing_product(self):
+    def test_for_existing_answer(self):
         uow = FakeUnitOfWork()
-        messagebus.handle(events.BatchCreated("b1", "GARISH-RUG", 100, None), uow)
-        messagebus.handle(events.BatchCreated("b2", "GARISH-RUG", 99, None), uow)
-        assert "b2" in [b.reference for b in uow.products.get("GARISH-RUG").batches]'''
+        messagebus.handle(events.QuestionCreated("q1", "When will meetings be held?", None), uow)
+        messagebus.handle(events.QuestionCreated("q2", "Elementary or Secondary", None), uow)
+        assert "q2" in [b.reference for b in uow.answers.get("When will meetings be held?").questions]
 
 
 class TestEvaluate:
@@ -60,18 +60,18 @@ class TestEvaluate:
             events.QuestionCreated("1", "When are meetings held?"), uow
         )
         results = messagebus.handle(
-            events.AllocationRequired("1", "When are meetings held?"), uow
+            events.EvaluateRequired("1", "When are meetings held?"), uow
         )
         assert results.pop(0) == "1"
 
-    '''def test_errors_for_invalid_sku(self):
+    def test_errors_for_invalid_ques(self):
         uow = FakeUnitOfWork()
-        messagebus.handle(events.BatchCreated("b1", "AREALSKU", 100, None), uow)
+        messagebus.handle(events.QuestionCreated("q1", "What is the teacher's name?", None), uow)
 
-        with pytest.raises(handlers.InvalidSku, match="Invalid sku NONEXISTENTSKU"):
+        with pytest.raises(handlers.InvalidQues, match="Invalid ques NONEXISTENTQUES"):
             messagebus.handle(
-                events.AllocationRequired("o1", "NONEXISTENTSKU", 10), uow
-            )'''
+                events.EvaluateRequired("o1", "NONEXISTENTQUES"), uow
+            )
 
     '''def test_commits(self):
         uow = FakeUnitOfWork()

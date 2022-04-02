@@ -6,7 +6,7 @@ from src.finallib import config
 
 
 def random_suffix():
-    return uuid.uuid4().hex[:6]
+    return uuid.uuid4().hex[:1]
 
 
 def random_ques(name=""):

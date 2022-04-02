@@ -9,13 +9,21 @@ from src.finallib.adapters import repository
 
 
 class AbstractUnitOfWork(abc.ABC):
-    questions: repository.AbstractRepository
+    answers: repository.AbstractRepository
 
     def __enter__(self) -> AbstractUnitOfWork:
         return self
 
     def __exit__(self, *args):
         self.rollback()
+        
+    def commit(self):
+        self._commit()
+    
+    def collect_new_events(self):
+        for answer in self.answers.seen:
+            while answer.events:
+                yield answer.events.pop(0)
 
     @abc.abstractmethod
     def commit(self):
@@ -29,6 +37,7 @@ class AbstractUnitOfWork(abc.ABC):
 DEFAULT_SESSION_FACTORY = sessionmaker(
     bind=create_engine(
         config.get_postgres_uri(),
+        isolation_level="REPEATABLE READ",
     )
 )
 
@@ -39,7 +48,7 @@ class SqlAlchemyUnitOfWork(AbstractUnitOfWork):
 
     def __enter__(self):
         self.session = self.session_factory()  # type: Session
-        self.batches = repository.SqlAlchemyRepository(self.session)
+        self.answers = repository.SqlAlchemyRepository(self.session)
         return super().__enter__()
 
     def __exit__(self, *args):

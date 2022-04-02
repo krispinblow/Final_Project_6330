@@ -1,25 +1,18 @@
-# pylint: disable=protected-access
+from src.finallib.adapters import repository
 from src.finallib.domain import model
-import src.finallib.adapters.repository as repository
 
-
-def test_repository_can_save_a_question(session):
-    question = model.Question("1", "When are meetings held?", "1")
-
+def test_get_by_questionqid(session):
     repo = repository.SqlAlchemyRepository(session)
-    repo.add(question)
-    session.commit()
+    q1 = model.Question(qid="1", ques="When will meetings be held?", aid="1")
+    q2 = model.Question(qid="2", ques="Elmentary or Secondary?", aid="2")
+    q3 = model.Question(qid="3", ques="STUCO?", aid="1")
+    a1 = model.Answer(ques="When will meetings be held?", questions=[q1])
+    a2 = model.Answer(ques="Elmentary or Secondary?", questions=[q2])
+    a3 = model.Answer(ques="STUCO?", questions=[q3])
+    repo.add(a1)
+    repo.add(a2)
+    repo.add(a3)
+    assert repo.get_by_questionqid("q1") == a1
+    assert repo.get_by_questionqid("q2") == a2
+    assert repo.get_by_questionqid("q3") == a3
 
-    rows = session.execute('SELECT qid, ques, aid FROM "questions"')
-    assert list(rows) == [("1", "When are meetings held?", "1")]
-
-
-def insert_decision_lines(session):
-    session.execute(
-        "INSERT INTO decision_lines (d_id, dname)" ' VALUES ("1", "Campus Activity")'
-    )
-    [[decisionline_id]] = session.execute(
-        "SELECT id FROM decision_lines WHERE d_id=:d_id AND dname=:dname",
-        dict(d_id="1", dname="Campus Activity"),
-    )
-    return decisionline_id
