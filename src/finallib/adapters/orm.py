@@ -14,13 +14,14 @@ decision_lines = Table(
     Column("dname", String(255)),
 )
 
-answer_lines = Table(
-    "answer_lines",
+answers = Table(
+    "answers",
     metadata,
     Column("id", Integer, primary_key=True, autoincrement=True),
     Column("aid", String(255)),
-    Column("answers", String(255)),
+    Column("version_number", Integer, nullable=False, server_default="0"),
 )
+
 questions = Table(
     "questions",
     metadata,
@@ -35,7 +36,6 @@ evaluate = Table(
     metadata,
     Column("id", Integer, primary_key=True, autoincrement=True),
     Column("decisionline_id", ForeignKey("decision_lines.id")),
-    Column("answerline_id", ForeignKey("answer_lines.id")),
     Column("question_id", ForeignKey("questions.id")),
 )
 
@@ -55,7 +55,7 @@ def start_mappers():
     )
     mapper(
         model.Answer,
-        answer_lines,
+        answers,
         properties={"questions": relationship(questions_mapper)},    
     )
 

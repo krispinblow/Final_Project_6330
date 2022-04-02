@@ -3,7 +3,7 @@ from unittest import mock
 import pytest
 
 from src.finallib.adapters import repository
-from src.finallib.domain import events
+from src.finallib.domain import commands, events
 from src.finallib.service_layer import handlers, messagebus, unit_of_work
 
 
@@ -41,15 +41,15 @@ class TestAddBatch:
     def test_for_new_answer(self):
         uow = FakeUnitOfWork()
         messagebus.handle(
-            events.QuestionCreated("1", "When are meetings held?",), uow
+            commands.CreateQuestion("1", "When are meetings held?",), uow
         )
         assert uow.answers.get("3") is not None
         assert uow.committed
 
     def test_for_existing_answer(self):
         uow = FakeUnitOfWork()
-        messagebus.handle(events.QuestionCreated("q1", "When will meetings be held?", None), uow)
-        messagebus.handle(events.QuestionCreated("q2", "Elementary or Secondary", None), uow)
+        messagebus.handle(commands.CreateQuestion("q1", "When will meetings be held?", None), uow)
+        messagebus.handle(commands.CreateQuestion("q2", "Elementary or Secondary", None), uow)
         assert "q2" in [b.reference for b in uow.answers.get("When will meetings be held?").questions]
 
 
@@ -57,20 +57,22 @@ class TestEvaluate:
     def test_returns_evaluate(self):
         uow = FakeUnitOfWork()
         messagebus.handle(
-            events.QuestionCreated("1", "When are meetings held?"), uow
+            commands.CreateQuestion("1", "When are meetings held?"), uow
         )
         results = messagebus.handle(
-            events.EvaluateRequired("1", "When are meetings held?"), uow
+            commands.Evaluate("1", "When are meetings held?"), uow
         )
         assert results.pop(0) == "1"
+        [question] = uow.answers.get("During classtime").questions
+        assert question.aid == "1"
 
     def test_errors_for_invalid_ques(self):
         uow = FakeUnitOfWork()
-        messagebus.handle(events.QuestionCreated("q1", "What is the teacher's name?", None), uow)
+        messagebus.handle(commands.CreateQuestion("q1", "What is the teacher's name?", None), uow)
 
         with pytest.raises(handlers.InvalidQues, match="Invalid ques NONEXISTENTQUES"):
             messagebus.handle(
-                events.EvaluateRequired("o1", "NONEXISTENTQUES"), uow
+                commands.Evaluate("o1", "NONEXISTENTQUES"), uow
             )
 
     '''def test_commits(self):

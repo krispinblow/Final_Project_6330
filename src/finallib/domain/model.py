@@ -2,7 +2,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Optional, List, Set
 import string
-from . import events
+from . import commands, events
 
 class Answer:
     def __init__(self, ques: str, questions: List[Question], version_number: int = 0):
@@ -18,7 +18,7 @@ class Answer:
             self.version_number += 1
             return question.reference
         except StopIteration:
-            #self.events.append(events.OutOfStock(line.sku))
+            self.events.append(events.InvalidQues(line.ques))
             return None
 
     
@@ -53,5 +53,5 @@ class Question:
         if self.qid == "1" and self.aid == "1":
             return True
 
-    """def can_evaluate(self, line: DecisionLine) -> bool:
-        return self.qid == line.qid and self.aid == line.aid"""
+    def can_evaluate(self, line: DecisionLine) -> bool:
+        return self.qid == line.qid and self.aid == line.aid

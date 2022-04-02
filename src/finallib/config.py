@@ -1,14 +1,6 @@
 import os
 
 
-def get_sqlite_memory_uri():
-    pass
-
-
-def get_sqlite_file_url():
-    return f"sqlite:///questions.db"
-
-
 def get_postgres_uri():
     host = os.environ.get("DB_HOST", "localhost")
     port = 54321 if host == "localhost" else 5432

@@ -19,5 +19,7 @@ class EvaluateRequired(Event):
     qid: str
     dname: str
    
-
+@dataclass
+class InvalidQues(Event):
+    ques: str
 
