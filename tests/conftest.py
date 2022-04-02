@@ -8,8 +8,8 @@ from sqlalchemy.exc import OperationalError
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, clear_mappers
 
-from src.finallib.adapters.orm import metadata, start_mappers
-from src.finallib import config
+from finallib.adapters.orm import metadata, start_mappers
+from finallib import config
 
 
 @pytest.fixture
@@ -42,7 +42,7 @@ def wait_for_postgres_to_come_up(engine):
 
 
 def wait_for_webapp_to_come_up():
-    deadline = time.time() + 20
+    deadline = time.time() + 10
     url = config.get_api_url()
     while time.time() < deadline:
         try:

@@ -59,6 +59,6 @@ def start_mappers():
         properties={"questions": relationship(questions_mapper)},    
     )
 
-@events.listens_for(model.Answer, "load")
+'''@events.listens_for(model.Answer, "load")
 def receive_load(answer, _):
-    answer.events =  []
+    answer.events =  []'''
