@@ -1,11 +1,11 @@
-from model import DecisionLine, Question
+from model import DecisionLine, Question, Answer
 
-def test_evaluate_decisions():
-    question = Question("1", "When are meetings held?", "1")
-    line = DecisionLine("1", "Campus-Activity")
+def test_evaluate_input():
+    qid1 = aid1
+    line = Answer("aid1")
     
-    question.evaluate(line)
+    qid1.evaluate(line)
     
-    #assert Question.aid == "1"
+    assert DecisionLine == "dec1"
 
     

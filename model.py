@@ -1,42 +1,35 @@
-
+from __future__ import annotations
 from dataclasses import dataclass
-from typing import List, Set 
-import string
+from typing import Optional, List, Set
 
 
 
-@dataclass
+class Answer:
+    aid1: str
+    aid2: str
+
 class DecisionLine:
-    d_id : str
-    dname: str
-    #doutput: str
+    dec1: str
+    dec2: str
+    dec3: str
+  
 
-'''class AnswerLine:
-    aid: str
-    answers: str'''
-    
-    
-    
-"""def __init__(self) -> None:
-        self.raw_text: str = None
-        self.Questions = None
-        pass"""
-    
 class Question:
-    def __init__(self, qid:str, ques:str, aid: str):
-        self.qid = qid
-        self.ques = ques
-        self.aid = aid
-        
-        self._evaluate = set() # type Set[DecisionLine]
+    qid1: str
+    qid2: str
     
-    def evaluate(self, line: DecisionLine):
-       if self.qid == "1" and self.aid == "1":
-           return  True
+   
+    def eval_input(self, qid1, qid2, dec1, dec2, dec3, aid1, aid2):
+        if qid1 == aid2:
+            print(qid2)
+            if qid2 == aid1:
+               return(dec2)
+            elif qid2 == aid2:
+                return(dec3)
+        elif qid1 == aid1:
+            return(dec1)
     
-    '''def can_evaluate(self, line: DecisionLine) -> bool:
-        return self.qid == line.qid and self.aid == line.aid'''
-           
+ 
     
 
     

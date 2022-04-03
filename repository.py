@@ -7,9 +7,8 @@ class AbstractRepository(abc.ABC):
     def add(self, question: model.Question):
         raise NotImplementedError
 
-    @abc.abstractmethod
-    def get(self, qid) -> model.Question:
-        raise NotImplementedError
+        
+  
 
 
 class SqlAlchemyRepository(AbstractRepository):
@@ -18,9 +17,6 @@ class SqlAlchemyRepository(AbstractRepository):
 
     def add(self, question):
         self.session.add(question)
-
-    def get(self, qid):
-        return self.session.query(model.Question).filter_by(qid=qid).one()
 
     def list(self):
         return self.session.query(model.Question).all()
