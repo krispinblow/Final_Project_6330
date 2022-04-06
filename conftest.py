@@ -1,4 +1,4 @@
-import pytest
+'''import pytest
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
@@ -14,4 +14,4 @@ def in_memory_db():
 
 @pytest.fixture
 def session(in_memory_db):
-    yield sessionmaker(bind=in_memory_db)()
+    yield sessionmaker(bind=in_memory_db)()'''

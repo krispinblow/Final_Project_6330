@@ -1,4 +1,4 @@
-# pylint: disable=protected-access
+'''# pylint: disable=protected-access
 import model
 import repository
 
@@ -28,3 +28,4 @@ def insert_decision_lines(session):
     return decisionline_id
 
 
+'''

@@ -1,4 +1,4 @@
-import abc
+'''import abc
 import model
 
 
@@ -19,4 +19,4 @@ class SqlAlchemyRepository(AbstractRepository):
         self.session.add(question)
 
     def list(self):
-        return self.session.query(model.Question).all()
+        return self.session.query(model.Question).all()'''
