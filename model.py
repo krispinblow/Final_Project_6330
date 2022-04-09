@@ -3,7 +3,7 @@
 import os
 from collections import OrderedDict
 
-from services.commands import *
+from src.finallib.domain.commands import *
 
 
 

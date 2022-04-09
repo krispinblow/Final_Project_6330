@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from typing import List
 
-from .models import EvaluateModel
+from ..src.finallib.domain.models import EvaluateModel
 
 class BaseRepository(ABC):
 

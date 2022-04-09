@@ -1,19 +1,20 @@
-from flask import Flask
+from datetime import datetime
+from flask import Flask, jsonify, request
+from finallib.domain import commands
+from finallib import bootstrap
+
 from flask_sqlalchemy import SQLAlchemy
 
-from repository.sqla_repository import *
-from . baseapi import AbstractBookMarkAPI
+from finallib.adapters.repository import *
+from . baseapi import AbstractEvaluateAPI
 
-# init from dotenv file
-from dotenv import load_dotenv
-load_dotenv()
+
+#from dotenv import load_dotenv
+#load_dotenv()
 
 app = Flask(__name__)
 
 class FlaskEvaluateAPI(AbstractEvaluateAPI):
-    """
-    Flask 
-    """
     def __init__(self) -> None:
         super().__init__()
     
@@ -37,11 +38,8 @@ class FlaskEvaluateAPI(AbstractEvaluateAPI):
     def many(self, filter, value, sort):
         pass
     
-    def add(question):
+    def add(evaluate):
         pass
 
-    '''def delete(bookmark):
-        pass'''
-
-    def update(question):
+    def update(evaluate):
         pass

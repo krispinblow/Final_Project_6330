@@ -4,7 +4,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
 from .base_repository import BaseRepository
-from .models import Base, EvaluateModel
+from ..src.finallib.domain.models import Base, EvaluateModel
 
 class SQLARespository(BaseRepository):
     def __init__(self, club_name=None) -> None:
