@@ -10,7 +10,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, clear_mappers
 from tenacity import retry, stop_after_delay
 
-from src.finallib.adapters.orm import metadata, start_mappers
+from src.finallib.adapters.orm  import metadata, start_mappers
 from src.finallib import config
 
 pytest.register_assert_rewrite("tests.e2e.api_client")
@@ -25,7 +25,7 @@ def in_memory_sqlite_db():
 
 @pytest.fixture
 def file_sqlite_db():
-    engine = create_engine(f"sqlite:///bookmarks.db")
+    engine = create_engine(f"sqlite:///evaluates.db")
     metadata.create_all(engine)
     return engine
 
@@ -78,7 +78,7 @@ def postgres_session(postgres_session_factory):
 
 @pytest.fixture
 def restart_api():
-    (Path(__file__).parent / "../src/barkylib/api/flaskapi.py").touch()
+    (Path(__file__).parent / "../src/finallib/api/flaskapi.py").touch()
     time.sleep(0.5)
     wait_for_webapp_to_come_up()
 
