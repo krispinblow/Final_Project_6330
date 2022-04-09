@@ -10,7 +10,8 @@ class CreateEvaluateTableCommand:
     def execute(self):  # <2>
         db.create_table('evaluates', {  # <3>
             'id': 'integer primary key autoincrement',
-            'name': 'text not null',
+            'teacher_name': 'text not null',
+            'club_name': 'text not null',
             'date_added': 'text not null',
         })
 

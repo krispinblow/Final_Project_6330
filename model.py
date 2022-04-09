@@ -67,12 +67,10 @@ def get_user_input(label, required=True):  # <1>
 
 def get_new_evaluate_data():  # <4>
     return {
-        'name': get_user_input('Name'),
+        'teacher_name': get_user_input('Teacher_Name'),
+        'club_name': get_user_input('Club_Name'),
     }
 
-'''
-def get_bookmark_id_for_deletion():  # <6>
-    return get_user_input('Enter a bookmark ID to delete')'''
 
 
 def loop():  # <1>
