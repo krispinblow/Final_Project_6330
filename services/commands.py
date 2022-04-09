@@ -16,7 +16,7 @@ class Command(ABC):
         raise NotImplementedError("A command must implement the execute method")
 
 
-class CreateBookmarksTableCommand(Command):
+class CreateEvaluateTableCommand(Command):
     """
     uses the DatabaseManager to create the evaluates table
     """

@@ -3,35 +3,22 @@
 import os
 from collections import OrderedDict
 
-import commands
+from services.commands import *
 
-
-def print_evaluations(evaluations):
-    for evaluate in evaluations:
-        print('\t'.join(
-            str(field) if field else ''
-            for field in evaluate
-        ))
 
 
 class Question:
     def __init__(self, name, command, prep_call=None):
-        self.name = name  # <1>
-        self.command = command  # <2>
-        self.prep_call = prep_call  # <3>
+        self.name = name  
+        self.command = command  
+        self.prep_call = prep_call 
 
-    def _handle_message(self, message):
-        if isinstance(message, list):
-            print_evaluations(message)
-        else:
-            print(message)
+    def choose(self):  
+        data = self.prep_call() if self.prep_call else None  
+        message = self.command.execute(data) if data else self.command.execute()  
+        print(message)
 
-    def choose(self):  # <4>
-        data = self.prep_call() if self.prep_call else None  # <5>
-        message = self.command.execute(data) if data else self.command.execute()  # <6>
-        self._handle_message(message)
-
-    def __str__(self):  # <7>
+    def __str__(self):  
         return self.name
 
 
@@ -47,20 +34,20 @@ def print_questions(questions):
 
 
 def question_choice_is_valid(choice, questions):
-    return choice in questions or choice.upper() in questions  # <1>
+    return choice in questions or choice.upper() in questions  
 
 
 def get_question_choice(questions):
-    choice = input('Choose an option: ')  # <2>
-    while not question_choice_is_valid(choice, questions):  # <3>
+    choice = input('Choose an option: ')  
+    while not question_choice_is_valid(choice, questions):  
         print('Invalid choice')
         choice = input('Choose an option: ')
-    return questions[choice.upper()]  # <4>
+    return questions[choice.upper()] 
 
 
-def get_user_input(label, required=True):  # <1>
-    value = input(f'{label}: ') or None  # <2>
-    while required and not value:  # <3>
+def get_user_input(label, required=True):  
+    value = input(f'{label}: ') or None  
+    while required and not value:  
         value = input(f'{label}: ') or None
     return value
 
@@ -86,10 +73,10 @@ def loop():  # <1>
     clear_screen()
 
     questions = OrderedDict({
-        'A': Question('When will meetings be held?  During class?', commands.CampusActivityCommand(), prep_call=get_new_evaluate_data),
-        'B': Question('When will meetings be held? After School?', commands.StudentActivityCommand(), prep_call=get_new_evaluate_data),
-        'E': Question("Edit a question", commands.EditBookmarkCommand(), prep_call=get_new_evaluate_info),
-        'Q': Question('Quit', commands.QuitCommand()),
+        'A': Question('When will meetings be held?  During class?', CampusActivityCommand(), prep_call=get_new_evaluate_data),
+        'B': Question('When will meetings be held? After School?', StudentActivityCommand(), prep_call=get_new_evaluate_data),
+        'E': Question("Edit a question", EditEvaluateCommand(), prep_call=get_new_evaluate_info),
+        'Q': Question('Quit', QuitCommand()),
     })
     print_questions(questions)
 
@@ -101,11 +88,10 @@ def loop():  # <1>
 
 
 if __name__ == '__main__':
-    commands.CreateEvaluateTableCommand().execute()
+    CreateEvaluateTableCommand().execute()
 
-    while True:  # <3>
+    while True:  
         loop()
-
 
 
 
