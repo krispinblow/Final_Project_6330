@@ -21,3 +21,5 @@ I scrapped my orginal model.py and reworked it. I don't need to code the details
 I am modeling a decision tree. There are decisions that are determined by the answers to specific questions. I will code in some information to test.
 
 Eureeka!! My test passed!!!!!!!!!!
+
+I started over as my tests were not in line with my model.

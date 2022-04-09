@@ -71,6 +71,15 @@ def get_new_evaluate_data():  # <4>
         'club_name': get_user_input('Club_Name'),
     }
 
+def get_new_evaluate_info():
+    question_id = get_user_input("Enter a question ID to edit")
+    field = get_user_input("Choose a value to edit (teacher_name, club_name)")
+    new_value = get_user_input(f"Enter the new value for {field}")
+    return {
+        "id": question_id,
+        "update": {field: new_value},
+    }
+
 
 
 def loop():  # <1>
@@ -79,6 +88,7 @@ def loop():  # <1>
     questions = OrderedDict({
         'A': Question('When will meetings be held?  During class?', commands.CampusActivityCommand(), prep_call=get_new_evaluate_data),
         'B': Question('When will meetings be held? After School?', commands.StudentActivityCommand(), prep_call=get_new_evaluate_data),
+        'E': Question("Edit a question", commands.EditBookmarkCommand(), prep_call=get_new_evaluate_info),
         'Q': Question('Quit', commands.QuitCommand()),
     })
     print_questions(questions)
@@ -97,86 +107,5 @@ if __name__ == '__main__':
         loop()
 
 
-def for_listings_only():
-    questions = {
-        'A': Question('When will meetings be held?  During class?', commands.AddEvaluateCommand()),
-        'B': Question('When will meetings be held? After School?', commands.ListEvaluatesCommand()),
-        'Q': Question('Quit', commands.QuitCommand()),
-    }
-    print_questions(questions)
 
 
-'''
-from __future__ import annotations
-from dataclasses import dataclass
-from typing import Optional, List, Set
-
-
-choices = {
-    'A': 'answer1',
-    'B': 'answer2',
-}
-
-#print(f'{choice} is for {choices[choice]}')
-
-
-
-class DecisionLine:
-    dec1 = "Campus Activity"
-    dec2 = "Student Activity"
-    dec3 = "Not an Activity Fund"
-  
-
-class evaluate:
-    qid1: str
-    qid2: str
-    
-   
-    def eval_input(self, qid1, qid2, dec1, dec2, dec3, aid1, aid2):
-        if qid1 == aid2:
-            print(qid2)
-            if qid2 == aid1:
-               return(dec2)
-            elif qid2 == aid2:
-                return(dec3)
-        elif qid1 == aid1:
-            return(dec1)
-    
-while True:
-    qid1 = input(f'When are meetings held? {choices}:')
-    if qid1 == "A":
-        print(DecisionLine.dec1)
-        break
-    elif qid1 == "B":
-        qid2 = input(f'Elementary or Secondary? {choices}')
-        if qid2 == "A":
-            print(DecisionLine.dec2)
-            break
-        elif qid2 == "B":
-            print(DecisionLine.dec3)
-            break '''
-    
-
-    
-        
-       
-   
-        
-        
-
-
-        
-    
-
-
-
-
-
-
-
-
-
-
-
-
-      
