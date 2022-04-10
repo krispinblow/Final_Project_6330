@@ -1,4 +1,5 @@
 import pytest
+<<<<<<< HEAD
 import requests
 
 from src.finallib import config
@@ -42,3 +43,17 @@ def test_unhappy_path_returns_400_and_error_message():
     r = requests.post(f"{url}/allocate", json=data)
     assert r.status_code == 400
     assert r.json()["message"] == f"Invalid question {unknown_ques}"
+=======
+
+import requests
+
+LOCALHOST = 'http://127.0.0.1:5000/'
+
+def test_api_can_connect():
+    res = requests.get(LOCALHOST)
+    assert res != None
+
+def test_api_index():
+    res = requests.get(LOCALHOST)
+    assert res != None
+>>>>>>> assign_8a

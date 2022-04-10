@@ -1,11 +1,47 @@
-from src.finallib.domain.model import DecisionLine, Question
+from datetime import date, datetime, timedelta
+import random
 
+from src.finallib.domain import events
+from src.finallib.domain.models import Evaluate
 
-def test_evaluate_decisions():
-    question = Question("1", "When are meetings held?", "1")
-    line = DecisionLine("1", "Campus-Activity")
+#ok_urls = ["http://", "https://"]
 
-    question.evaluate(line)
+def test_evaluate_teacher_name_is_unique():
+    pass
 
-    # assert Question.aid == "1"
+def test_new_evaluate_added_and_edited_times_are_the_same():
+    # arrange
+    created = datetime.now().isoformat()
+    
+    # act
+    evaluate = Evaluate(0, "test", "test", created)
 
+    # assert
+    assert evaluate.date_added == evaluate.date_edited
+
+'''def test_new_bookmark_url_is_well_formed():
+    # arrange
+    created = datetime.now().isoformat()
+    edited = created
+    
+    # act
+    bookmark = Bookmark(0, "test", "http://www.example/com", None, created)
+    # list comprehensions - https://www.w3schools.com/python/python_lists_comprehension.asp
+    okay = [prefix for prefix in ok_urls if bookmark.url.startswith(prefix) ]
+    # any function - https://www.w3schools.com/python/ref_func_any.asp
+    assert any(okay)'''
+
+def test_that_edit_time_is_newer_than_created_time():
+    # arrange
+    created = datetime.now().isoformat()
+    edited = created
+    
+    # act
+    evaluate = Evaluate(0, "test", "test", created)
+
+    hours_addition = random.randrange(1,10)
+    edit_time = datetime.fromisoformat(evaluate.date_edited)
+    evaluate.date_edited = (edit_time + timedelta(hours=hours_addition)).isoformat()
+
+    # assert
+    assert evaluate.date_added < evaluate.date_edited

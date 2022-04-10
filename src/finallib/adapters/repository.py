@@ -1,78 +1,56 @@
-import abc
-from typing import Set
-from src.finallib.adapters import orm
-from src.finallib.domain import model
+from abc import ABC, abstractmethod
 
-class AbstractRepository(abc.ABC):
+from typing import List, Set
+
+from finallib.adapters import orm
+from finallib.domain.models import Base, Evaluate
+
+
+class AbstractEvaluateRepository(ABC):
     def __init__(self):
-        self.seen = set()  # type: Set[model.Product]
+        self.evaluates = set()
 
-    def add(self, answer: model.Answer):
-        self._add(answer)
-        self.seen.add(answer)
+    @abstractmethod
+    def add_one(self,evaluate: Evaluate) -> None:
+        raise NotImplementedError("Derived classes must implement add_one")
 
-    def get(self, ques) -> model.Answer:
-        answer = self._get(ques)
-        if answer:
-            self.seen.add(answer)
-        return answer
+    @abstractmethod
+    def add_all(self, evaluates: List[Evaluate]) -> None:
+        raise NotImplementedError("Derived classes must implement add_all")
 
-    def get_by_questionqid(self, questionqid) -> model.Answer:
-        answer = self._get_by_questionqid(questionqid)
-        if answer:
-            self.seen.add(answer)
-        return answer
+    @abstractmethod
+    def get(evaluate: Evaluate, query) -> List[Evaluate]:
+        raise NotImplementedError("Derived classes must implement get")
 
-    @abc.abstractmethod
-    def _add(self, answer: model.Answer):
-        raise NotImplementedError
-
-    @abc.abstractmethod
-    def _get(self, ques) -> model.Answer:
-        raise NotImplementedError
-
-    @abc.abstractmethod
-    def _get_by_questionqid(self, questionqid) -> model.Answer:
-        raise NotImplementedError
+    @abstractmethod
+    def update(evaluate: Evaluate) -> None:
+        raise NotImplementedError("Derived classes must implement update")
 
 
-class SqlAlchemyRepository(AbstractRepository):
-    def __init__(self, session):
+class SqlAlchemyBookmarkRepository(AbstractEvaluateRepository):
+    def __init__(self, session) -> None:
         super().__init__()
         self.session = session
 
-    def _add(self, answer):
-        self.session.add(answer)
+    def add_one(self, evaluate: Evaluate) -> None:
+        self.session.add(evaluate)
+        self.session.commit()
 
-    def _get(self, ques):
-        return self.session.query(model.Answer).filter_by(ques=ques).first()
+    def add_all(self, evaluates: List[Evaluate]) -> None:
+        self.session.add_all(evaluates)
+        self.session.commit()
 
-    def _get_by_questionqid(self, questionqid):
-        return (
-            self.session.query(model.Answer)
-            .join(model.Question)
-            .filter(orm.questions.c.reference == questionqid)
-            .first()
-        )
-'''class AbstractRepository(abc.ABC):
-    @abc.abstractmethod
-    def add(self, question: model.Question):
-        raise NotImplementedError
+    def get(self, evaluate: Evaluate, query) -> List[Evaluate]:
+        pass
 
-    @abc.abstractmethod
-    def get(self, qid) -> model.Question:
-        raise NotImplementedError
+    def update(self, evaluate) -> int:
+        pass
+
+    def update_many(self, evaluates) -> int:
+        pass
 
 
-class SqlAlchemyRepository(AbstractRepository):
-    def __init__(self, session):
-        self.session = session
-
-    def add(self, question):
-        self.session.add(question)
-
-    def get(self, qid):
-        return self.session.query(model.Question).filter_by(qid=qid).one()
-
-    def list(self):
-        return self.session.query(model.Question).all()'''
+class FakeEvaluateRepository(AbstractEvaluateRepository):
+    def __init__(self, evaluates):
+        super().__init__()
+        self._evaluates = set(evaluates)

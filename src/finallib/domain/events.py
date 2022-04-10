@@ -1,25 +1,32 @@
+from abc import ABC
+from datetime import datetime
 from dataclasses import dataclass
-from typing import Optional
+from typing import Optional, List
 
+from .models import Evaluate 
 
-class Event:
+class Event(ABC):
     pass
 
 
 @dataclass
-class QuestionCreated(Event):
-    qid: str
-    ques: str
-    aid: str
+class EvaluateAdded(Event):
+    id: int
+    teacher_name: str
+    club_name: str
+    date_added: str
+
+
+@dataclass
+class EvaluateEdited(Event):
+    id: int
+    teacher_name: str
+    club_name: str
+    date_edited: str
     
 
 @dataclass
-class EvaluateRequired(Event):
-    d_id: str
-    qid: str
-    dname: str
-   
-@dataclass
-class InvalidQues(Event):
-    ques: str
+class EvaluateListed(Event):
+    bookmarks: List[Evaluate]
+
 

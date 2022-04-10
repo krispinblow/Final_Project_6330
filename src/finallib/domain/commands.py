@@ -1,21 +1,35 @@
-from typing import Optional
+import sys
+from abc import ABC
+from datetime import datetime
 from dataclasses import dataclass
+from typing import Optional
+
+import requests
 
 
-class Command:
+class Command(ABC):
     pass
 
-
 @dataclass
-class Evaluate(Command):
-    d_id: str
-    ques: str
-    aid: str
+class CampusActivityCommand(Command):
+    id: int
+    teacher_name: str
+    club_name: str
+    date_added: str
+    date_edited: str
+
+@dataclass 
+class StudentActivityCommand(Command):
+    id: int
+    teacher_name: str
+    club_name: str
+    date_added: str
+    date_edited: str
 
 
-@dataclass
-class CreateQuestion(Command):
-    qid: str
-    ques: str
-
-
+class EditEvaluateCommand(Command):
+    id: int
+    teacher_name: str
+    club_name: str
+    date_added: str
+    date_edited: str

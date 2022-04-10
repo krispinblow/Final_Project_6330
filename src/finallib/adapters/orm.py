@@ -1,46 +1,38 @@
-from sqlalchemy import Table, MetaData, Column, Integer, String, Date, ForeignKey, events
-from sqlalchemy.orm import mapper, relationship
+import logging
+from typing import Text
+from sqlalchemy import (
+    Table,
+    MetaData,
+    Column,
+    Integer,
+    String,
+    DateTime,
+    Text,
+    event,
+)
 
-from src.finallib.domain import model
+from sqlalchemy.orm import mapper
 
+from ..domain.models import Evaluate
+
+logger = logging.getLogger(__name__)
 
 metadata = MetaData()
 
-decision_lines = Table(
-    "decision_lines",
-    metadata,
-    Column("id", Integer, primary_key=True, autoincrement=True),
-    Column("d_id", String(255)),
-    Column("dname", String(255)),
-)
 
-answers = Table(
-    "answers",
+evaluates = Table(
+    "evaluates",
     metadata,
     Column("id", Integer, primary_key=True, autoincrement=True),
-    Column("aid", String(255)),
-    Column("version_number", Integer, nullable=False, server_default="0"),
-)
-
-questions = Table(
-    "questions",
-    metadata,
-    Column("id", Integer, primary_key=True, autoincrement=True),
-    Column("qid", String(255)),
-    Column("ques", String(255)),
-    Column("aid", String(255)),
-)
-
-evaluate = Table(
-    "evaluate",
-    metadata,
-    Column("id", Integer, primary_key=True, autoincrement=True),
-    Column("decisionline_id", ForeignKey("decision_lines.id")),
-    Column("question_id", ForeignKey("questions.id")),
+    Column("teacher_name", String(255), unique=True),
+    Column("club_name", String(255)),
+    Column("date_added", DateTime),
+    Column("date_edited", DateTime),
 )
 
 
 def start_mappers():
+<<<<<<< HEAD
     lines_mapper = mapper(model.DecisionLine, decision_lines)
     questions_mapper = mapper(
         model.Question,
@@ -62,3 +54,7 @@ def start_mappers():
 '''@events.listens_for(model.Answer, "load")
 def receive_load(answer, _):
     answer.events =  []'''
+=======
+    logger.info("string mappers")
+    evaluates_mapper = mapper(Evaluate, evaluates)
+>>>>>>> assign_8a
