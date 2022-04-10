@@ -1,45 +1,50 @@
 from datetime import datetime
+import json 
+
 from flask import Flask, jsonify, request
 from finallib.domain import commands
+from finallib.api import views
 from finallib import bootstrap
 
-from flask_sqlalchemy import SQLAlchemy
 
-from finallib.adapters.repository import *
-from . baseapi import AbstractEvaluateAPI
-
-
-#from dotenv import load_dotenv
-#load_dotenv()
 
 app = Flask(__name__)
+bus = bootstrap.bootstrap()
 
-class FlaskEvaluateAPI(AbstractEvaluateAPI):
-    def __init__(self) -> None:
-        super().__init__()
+  
+@app.route('/')
+def index():
+    return f'Final API'
+
+@app.route('/add_evaluate', methods=['POST'])
+def add_confirm_and_remove_evaluate():
     
-    @app.route('/')
-    def index(self):
-        return f'Final API'
-
-    @app.route('/api/one/<id>')
-    def one(self, id):
-        return f'The provided id is {id}'
-
-    @app.route('/api/all')
-    def all(self):
-        return f'all records'
-
-    @app.route('/api/first/<property>/<value>/<sort>')
-    def first(self, filter, value, sort):
-        return f'the first '
-        pass
+    data = request.get_json()
+    id = data["id"]
+    teacher_name = data["teacher_name"]
+    club_name = data["club_name"]
+    date_added = data["date_added"]
+    date_edited = data["date_edited"]
     
-    def many(self, filter, value, sort):
-        pass
-    
-    def add(evaluate):
-        pass
+    cmd = commands.CampusActivityCommand(
+            id, teacher_name, club_name, date_added, date_edited,
+    )
+    bus.handle(cmd)
+    return "OK", 201
 
-    def update(evaluate):
-        pass
+
+@app.route("/evaluates/<teacher_name>", methods=['GET'])
+def get_evaluate_by_teacher_name(teacher_name):
+    result = views.evaluates_view(teacher_name, bus.uow)
+    if not result:
+         return "not found", 404
+    return jsonify(result), 200
+
+def get_evaluate_by_id(teacher_name):
+    pass
+
+def update(evaluate):
+    pass
+
+if __name__ == "__main__":
+    app.run()

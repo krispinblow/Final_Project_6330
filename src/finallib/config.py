@@ -1,12 +1,14 @@
 import os
 
+basedir = os.path.abspath(os.path.dirname(__file__))
 
 def get_sqlite_memory_uri():
-    pass
+    return f"sqlite:///:memory:"
+
 
 
 def get_sqlite_file_url():
-    return f"sqlite:///evaluates.db"
+    return f"sqlite:///{os.path.join(basedir, 'evaluates.db')}"
 
 
 def get_postgres_uri():

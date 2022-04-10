@@ -11,13 +11,15 @@ from sqlalchemy import (
     event,
 )
 
-from sqlalchemy.orm import mapper
+from sqlalchemy.orm import registry, mapper, relationship
 
 from ..domain.models import Evaluate
 
-logger = logging.getLogger(__name__)
+mapper_registry = registry()
+Base = mapper_registry.generate_base()
 
-metadata = MetaData()
+logger = logging.getLogger(__name__)
+metadata = mapper_registry.metadata
 
 
 evaluates = Table(
@@ -32,5 +34,6 @@ evaluates = Table(
 
 
 def start_mappers():
-    logger.info("string mappers")
-    evaluates_mapper = mapper(Evaluate, evaluates)
+    logger.info("starting mappers")
+    mapper_registry.map_imperatively(Evaluate, evaluates)
+    
