@@ -10,9 +10,9 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, clear_mappers
 from tenacity import retry, stop_after_delay
 
-from src.finallib.adapters.orm import metadata, start_mappers
-from src.finallib import config
-from src.finallib.api import flaskapi
+from finallib.adapters.orm import metadata, start_mappers
+from finallib import config
+from finallib.api import flaskapi
 
 pytest.register_assert_rewrite("tests.e2e.api_client")
 
