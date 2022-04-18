@@ -88,7 +88,7 @@ def test_get_all_evaluates():
         commands.CampusActivityCommand(
             99,
             f"Test",  # teacher_name
-            f"http://example.com",  # test_club
+            f"test_club",  # test_club
             nu.isoformat(),  # date added
             nu.isoformat(),  # date edited
         )

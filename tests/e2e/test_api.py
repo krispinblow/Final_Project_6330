@@ -20,7 +20,7 @@ def test_path_correct_returns_201_and_evaluate_added(client):
     date_added = nu.isoformat()
     date_edited = nu.isoformat()
 
-    # post_to_add_bookmark(title, url, notes, date_added, date_edited)
+    # post_to_add_evaluate(title, url, notes, date_added, date_edited)
     club_name = config.get_api_url()
 
     r = client.post(

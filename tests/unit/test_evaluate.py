@@ -15,7 +15,7 @@ def test_new_evaluate_added_and_edited_times_are_the_same():
     
     # act
     edited: str = created
-    evaluate = Evaluate(0, "test", "test_club", created, created)
+    evaluate = Evaluate(0, "test", "test_club", created, edited)
 
     # assert
     assert evaluate.date_added == evaluate.date_edited
