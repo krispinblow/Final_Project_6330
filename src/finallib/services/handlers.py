@@ -3,9 +3,6 @@ from dataclasses import asdict
 from typing import List, Dict, Callable, Type, TYPE_CHECKING
 
 from finallib.domain import commands, events, models
-from src.finallib.domain.commands import EditEvaluateCommand
-
-from src.finallib.domain.events import EvaluateEdited
 
 
 if TYPE_CHECKING:
@@ -17,13 +14,24 @@ def add_evaluate(
     uow: unit_of_work.AbstractUnitOfWork,
 ):
     with uow:
-        # look to see if we already have this bookmark as the title is set as unique
-        evaluate = uow.evaluates.get(title=cmd.title)
-        if evaluate is None:
-            evaluate = models.Evaluate(
-                cmd.teacher_name, cmd.club_name, cmd.date_added, cmd.date_edited
+        
+        evaluate = None
+        # look to see if we already have this evaluate as the teacher_name is set as unique
+        try:
+            evaluate = uow.evaluates.get_by_teacher_name(value=cmd.teacher_name)
+            
+            #check to see if the list is empty
+            if not evaluate:
+                evaluate = models.Evaluate(
+               cmd.id, cmd.teacher_name, cmd.club_name, cmd.date_added, cmd.date_edited,
             )
             uow.evaluates.add(evaluate)
+        except:
+            evaluate = models.Evaluate(
+                cmd.id, cmd.teacher_name, cmd.club_name, cmd.date_added, cmd.date_edited,
+            )
+            uow.evaluates.add(evaluate)
+            
         uow.commit()
 
 # ListBookmarksCommand: order_by: str order: str
@@ -32,13 +40,24 @@ def list_evaluates(
     uow: unit_of_work.AbstractUnitOfWork,
 ):
     with uow:
-        # look to see if we already have this bookmark as the title is set as unique
-        evaluate = uow.evaluates.get(title=cmd.title)
-        if evaluate is None:
-            evaluate = models.Evaluate(
-                cmd.teacher_name, cmd.club_name, cmd.date_added, cmd.date_edited
+        
+        evaluate = None
+        # look to see if we already have this evaluate as the teacher_name is set as unique
+        try:
+            evaluate = uow.evaluates.get_by_teacher_name(value=cmd.teacher_name)
+            
+            #check to see if the list is empty
+            if not evaluate:
+                evaluate = models.Evaluate(
+               cmd.id, cmd.teacher_name, cmd.club_name, cmd.date_added, cmd.date_edited,
             )
             uow.evaluates.add(evaluate)
+        except:
+            evaluate = models.Evaluate(
+                cmd.id, cmd.teacher_name, cmd.club_name, cmd.date_added, cmd.date_edited,
+            )
+            uow.evaluates.add(evaluate)
+            
         uow.commit()
 
 

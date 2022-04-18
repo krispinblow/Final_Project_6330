@@ -1,6 +1,6 @@
 from __future__ import annotations
-from abc import ABC
-import abc
+from abc import ABC, abstractmethod
+
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.session import Session
@@ -9,9 +9,11 @@ from sqlalchemy.orm.session import Session
 from finallib import config
 from finallib.adapters import repository
 
+from finallib.domain.models import Evaluate
+
 
 class AbstractUnitOfWork(ABC):
-    evaluates: repository.AbstractRepository
+    evaluates: repository.AbstractEvaluateRepository
 
     def __enter__(self) -> AbstractUnitOfWork:
         return self
@@ -23,15 +25,15 @@ class AbstractUnitOfWork(ABC):
         self._commit()
 
     def collect_new_events(self):
-        for product in self.products.seen:
-            while product.events:
-                yield product.events.pop(0)
+        for evaluate in self.evaluates.seen:
+            while evaluate.events:
+                yield evaluate.events.pop(0)
 
-    @abc.abstractmethod
+    @abstractmethod
     def _commit(self):
         raise NotImplementedError
 
-    @abc.abstractmethod
+    @abstractmethod
     def rollback(self):
         raise NotImplementedError
 
@@ -39,7 +41,7 @@ class AbstractUnitOfWork(ABC):
 DEFAULT_SESSION_FACTORY = sessionmaker(
     bind=create_engine(
         config.get_sqlite_file_url(),
-        isolation_level="REPEATABLE READ",
+        isolation_level="SERIALIZABLE",
     )
 )
 
@@ -50,7 +52,7 @@ class SqlAlchemyUnitOfWork(AbstractUnitOfWork):
 
     def __enter__(self):
         self.session = self.session_factory()  # type: Session
-        self.products = repository.SqlAlchemyRepository(self.session)
+        self.evaluates = repository.SqlAlchemyRepository(self.session)
         return super().__enter__()
 
     def __exit__(self, *args):
@@ -62,3 +64,14 @@ class SqlAlchemyUnitOfWork(AbstractUnitOfWork):
 
     def rollback(self):
         self.session.rollback()
+
+class FakeUnitOfWork(AbstractUnitOfWork):
+    def __init__(self):
+        self.evaluates = repository.FakeEvaluateRepository(evaluates = [])
+        self.committed = False
+
+    def _commit(self):
+        self.committed = True
+
+    def rollback(self):
+        pass

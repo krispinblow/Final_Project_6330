@@ -1,15 +1,16 @@
-from sqlalchemy import Column, String, Integer, Date
-from sqlalchemy.ext.declarative import declarative_base
-
-Base = declarative_base()
+from __future__ import annotations
+from dataclasses import dataclass
+from datetime import date, datetime
+from typing import List
 
 class Evaluate:
-     def __init__(self, id, teacher_name, club_name, date_added) -> None:
-        self.id = id
-        self.teacher_name = teacher_name
-        self.club_name = club_name
-        self.date_added = date_added
-        self.date_edited = self.date_added
+     def __init__(self, id, teacher_name, club_name, date_added: datetime, date_edited: datetime):
+        self.id : int = id
+        self.teacher_name : str = teacher_name
+        self.club_name : str = club_name
+        self.date_added : str = date_added
+        self.date_edited : str = date_edited
+        self.events : List[Evaluate]= []
 
 
 '''class EvaluateModel(Base):

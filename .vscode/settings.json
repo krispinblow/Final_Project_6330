@@ -1,6 +1,5 @@
 {
     "python.defaultInterpreterPath": "C:\\Users\\Krispin\\Documents\\Documents\\USB_masters\\MSCISBA\\7_Spring_2022\\CIDM_6330\\Code\\Final\\venv\\Scripts\\python.exe",
-    "python.analysis.extraPaths": [
-        "C:\\Users\\Krispin\\Documents\\Documents\\USB_masters\\MSCISBA\\7_Spring_2022\\CIDM_6330\\Code\\Final\\src\\finallib\\adapters\\orm.py"
-    ]
+          
+     
 }

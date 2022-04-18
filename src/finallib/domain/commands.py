@@ -2,7 +2,7 @@ import sys
 from abc import ABC
 from datetime import datetime
 from dataclasses import dataclass
-from typing import Optional
+
 
 import requests
 

@@ -1,8 +1,8 @@
 from datetime import date, datetime, timedelta
 import random
 
-from src.finallib.domain import events
-from src.finallib.domain.models import Evaluate
+from finallib.domain import events
+from finallib.domain.models import Evaluate
 
 #ok_urls = ["http://", "https://"]
 
@@ -11,10 +11,11 @@ def test_evaluate_teacher_name_is_unique():
 
 def test_new_evaluate_added_and_edited_times_are_the_same():
     # arrange
-    created = datetime.now().isoformat()
+    created: str = datetime.now().isoformat()
     
     # act
-    evaluate = Evaluate(0, "test", "test", created)
+    edited: str = created
+    evaluate = Evaluate(0, "test", "test_club", created, edited)
 
     # assert
     assert evaluate.date_added == evaluate.date_edited
@@ -33,11 +34,11 @@ def test_new_evaluate_added_and_edited_times_are_the_same():
 
 def test_that_edit_time_is_newer_than_created_time():
     # arrange
-    created = datetime.now().isoformat()
-    edited = created
+    created: str = datetime.now().isoformat()
+    edited: str = created
     
     # act
-    evaluate = Evaluate(0, "test", "test", created)
+    evaluate = Evaluate(0, "test", "test", created, edited)
 
     hours_addition = random.randrange(1,10)
     edit_time = datetime.fromisoformat(evaluate.date_edited)
