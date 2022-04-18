@@ -32,29 +32,5 @@ evaluates = Table(
 
 
 def start_mappers():
-<<<<<<< HEAD
-    lines_mapper = mapper(model.DecisionLine, decision_lines)
-    questions_mapper = mapper(
-        model.Question,
-        questions,
-        properties={
-            "_evaluate": relationship(
-                lines_mapper,
-                secondary=evaluate,
-                collection_class=set,
-            )
-        },
-    )
-    mapper(
-        model.Answer,
-        answers,
-        properties={"questions": relationship(questions_mapper)},    
-    )
-
-'''@events.listens_for(model.Answer, "load")
-def receive_load(answer, _):
-    answer.events =  []'''
-=======
     logger.info("string mappers")
     evaluates_mapper = mapper(Evaluate, evaluates)
->>>>>>> assign_8a
